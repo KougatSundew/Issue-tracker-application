@@ -1,3 +1,8 @@
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+
 document.getElementById('issueInputForm').addEventListener('submit', saveIssue);
 
 function saveIssue(e) {
@@ -12,7 +17,8 @@ function saveIssue(e) {
         description: issueDesc,
         severity: issueSeverity,
         assignedTo: issueAssignedTo,
-        status: issueStatus
+        status: issueStatus,
+        created: new Date().toLocaleString('sv-SE')
     }
 
     if(localStorage.getItem('issues') == null) {
@@ -65,27 +71,20 @@ function fetchIssues() {
         var severity = issues[i].severity;
         var assignedTo = issues[i].assignedTo;
         var status = issues[i].status;
-        console.log(id, desc, severity, assignedTo, status);
-        issueList.innerHTML += issueFactory({id, desc, severity, assignedTo, status});
+        var created = issues[i].created;
+        //console.log(id, desc, severity, assignedTo, status);
+        issueList.innerHTML += issueFactory({id, desc, severity, assignedTo, status, created});
     }
-    // issues.array.forEach(issue => {
-    //     var id = issue.id;
-    //     var desc = issue.desc;
-    //     var severity = issue.severity;
-    //     var assignedTo = issue.assignedTo;
-    //     var status = issue.status;
-    //     console.log(id, desc, severity, assignedTo, status);
-    //     issueList.innerHTML += issueFactory({id, desc, severity, assignedTo, status})
-    // });
 }
 
-function issueFactory({id, desc, severity, assignedTo, status}) {
+function issueFactory({id, desc, severity, assignedTo, status, created}) {
     return `<div class="well issue">
                 <h7>Issue ID: ${id}</h7>
                 <p><span class="badge ${(status == 'Open' ? 'bg-success' : 'bg-danger')}"> ${status} </span></p>
                 <h3> ${desc} </h3>
                 <p class="severity"><span class="bi bi-clock"></span> ${severity}</p>
                 <p class="assignedTo"><span class="bi bi-person-fill"></span> ${assignedTo}</p>
+                <span class="badge bg-info" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tooltip on bottom">Created:</span> ${created}<br><br>
                 <a href="#" onclick="setStatusClosed('${id}')" class="btn btn-warning">Close</a>
                 <a href="#" onclick="deleteIssue('${id}')" class="btn btn-danger">Delete</a>
             </div>`
