@@ -1,0 +1,32 @@
+aside {
+    width: 10%;
+    height: 500px;
+    background-color: aqua;
+}
+
+#issueList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.issue {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 20px;
+    width: 32%;
+}
+.content {
+    margin-top: 20px;
+}
+.footer {
+    margin-top: 20px;
+}
+.assignedTo{
+    margin-top: -15px;
+}
+.form-wrapper {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 20px;
+}
