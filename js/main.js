@@ -63,6 +63,8 @@ function fetchIssues() {
     var issues = JSON.parse(localStorage.getItem('issues'));
     var issueList = document.getElementById('issueList');
 
+    if(issues == null) return
+
     issueList.innerHTML = '';
 
     for(let i = 0; i < issues.length; i++) {
